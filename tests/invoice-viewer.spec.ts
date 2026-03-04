@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test'
 test.describe('견적서 뷰어 (공개)', () => {
   test('견적서 페이지 로드 및 주요 섹션 표시', async ({ page }) => {
     // 더미 slug로 페이지 접근
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 헤더 바 확인
     const headerBar = page.locator('[role="banner"]')
@@ -36,7 +36,7 @@ test.describe('견적서 뷰어 (공개)', () => {
   })
 
   test('PDF 다운로드 버튼 동작', async ({ page }) => {
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 다운로드 버튼 찾기
     const downloadButton = page
@@ -59,7 +59,7 @@ test.describe('견적서 뷰어 (공개)', () => {
   })
 
   test('인쇄 버튼 동작', async ({ page }) => {
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 인쇄 버튼 찾기
     const printButton = page
@@ -77,7 +77,7 @@ test.describe('견적서 뷰어 (공개)', () => {
 
   test('반응형 레이아웃 - 데스크톱', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 })
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 헤더 바의 버튼들이 텍스트와 함께 보여야 함
     const headerButtons = page.locator('[role="banner"] button')
@@ -95,7 +95,7 @@ test.describe('견적서 뷰어 (공개)', () => {
 
   test('반응형 레이아웃 - 모바일', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 모바일에서 모든 주요 섹션이 세로로 표시되어야 함
     const sections = page.locator('section, main > div')
@@ -109,7 +109,7 @@ test.describe('견적서 뷰어 (공개)', () => {
   })
 
   test('다크 모드 토글 기능', async ({ page }) => {
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 다크 모드 토글 찾기
     const themeToggle = page
@@ -136,7 +136,7 @@ test.describe('견적서 뷰어 (공개)', () => {
   })
 
   test('접근성 - 키보드 네비게이션', async ({ page }) => {
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // Tab 키로 인쇄 버튼 접근
     await page.keyboard.press('Tab')
@@ -150,7 +150,7 @@ test.describe('견적서 뷰어 (공개)', () => {
   })
 
   test('접근성 - 스크린 리더', async ({ page }) => {
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 주요 영역이 시맨틱 HTML로 마크업되었는지 확인
     const header = page.locator('header, [role="banner"]')
@@ -172,7 +172,7 @@ test.describe('견적서 뷰어 (공개)', () => {
       setTimeout(() => route.continue(), 500)
     })
 
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 페이지 로드 대기
     await page.waitForLoadState('networkidle')
@@ -215,7 +215,7 @@ test.describe('견적서 뷰어 - 에러 처리', () => {
       route.abort('failed')
     })
 
-    await page.goto('/invoice/dummy-invoice-001')
+    await page.goto('/view/dummy-invoice-001')
 
     // 에러 메시지 확인
     const errorText = page.locator('text=/오류|실패|다시/i').first()

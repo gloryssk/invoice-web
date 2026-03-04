@@ -103,7 +103,6 @@ export function HeaderBar({
             invoiceNumber={invoiceNumber}
             clientName={clientName}
             issueDate={issueDate}
-            targetElementId="invoice-content"
           />
         </div>
       </div>

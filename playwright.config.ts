@@ -18,6 +18,9 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  // 개발 서버 대기 시간 증가
+  timeout: 30000,
+
   projects: [
     {
       name: 'chromium',
@@ -46,9 +49,9 @@ export default defineConfig({
   ],
 
   /* 로컬 개발 서버 자동 시작 */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
+  // webServer: {
+  //   command: 'npm run dev',
+  //   url: 'http://localhost:3002',
+  //   reuseExistingServer: !process.env.CI,
+  // },
 })
