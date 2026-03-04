@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "mcp__ide",
+      "mcp__shadcn",
+      "mcp__playwright",
+      "mcp__sequential-thinking",
+      "mcp__shadcn__search_items_in_registries",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "mcp__shrimp-task-manager__init_project_rules",
+      "mcp__shrimp-task-manager__process_thought",
+      "mcp__shrimp-task-manager__plan_task",
+      "mcp__shrimp-task-manager__analyze_task",
+      "mcp__shrimp-task-manager__reflect_task",
+      "mcp__shrimp-task-manager__split_tasks",
+      "mcp__shrimp-task-manager__list_tasks",
+      "mcp__shrimp-task-manager__update_task",
+      "mcp__shrimp-task-manager__query_task",
+      "mcp__shrimp-task-manager__execute_task",
+      "mcp__shrimp-task-manager__verify_task",
+      "mcp__shrimp-task-manager__get_task_detail",
+      "Skill(docs:update-roadmap)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["playwright"],
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/notification-hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

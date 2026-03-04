@@ -1,0 +1,20 @@
+# Invoice Web Viewer - Robots 설정
+# 검색 엔진 크롤러 정책
+
+User-agent: *
+# 공개 견적서 뷰어 페이지는 크롤링 허용
+Allow: /view/
+
+# 관리자 대시보드는 크롤링 제외
+Disallow: /dashboard/
+# API 엔드포인트는 크롤링 제외
+Disallow: /api/
+# 기타 보호할 경로
+Disallow: /_next/
+Disallow: /private/
+
+# Sitemap 위치
+Sitemap: /sitemap.xml
+
+# 크롤링 속도 제한 (선택사항, ms 단위)
+# Crawl-delay: 1

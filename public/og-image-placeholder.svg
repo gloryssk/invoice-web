@@ -1,0 +1,18 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grad)"/>
+  <text x="600" y="250" font-size="72" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">
+    Invoice Web Viewer
+  </text>
+  <text x="600" y="350" font-size="36" fill="rgba(255,255,255,0.9)" text-anchor="middle" font-family="Arial">
+    노션 기반 견적서 관리 시스템
+  </text>
+  <text x="600" y="550" font-size="24" fill="rgba(255,255,255,0.7)" text-anchor="middle" font-family="Arial">
+    전문적인 웹 인터페이스로 견적서를 조회하고 PDF로 다운로드하세요
+  </text>
+</svg>
