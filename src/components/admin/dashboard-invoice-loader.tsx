@@ -17,14 +17,12 @@
 'use client'
 
 import { useEffect, useCallback, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import { RefreshCw, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { InvoiceListContainer } from '@/components/admin/invoice-list-container'
 import { useInvoiceStore } from '@/store/invoiceStore'
-import { adminLogout } from '@/lib/actions/auth'
 
 // ============================================================
 // 상수 정의
@@ -124,8 +122,6 @@ function ErrorState({ message, onRetry, retryCount }: ErrorStateProps) {
  * Zustand 스토어에서 데이터를 페칭하고 로딩/에러/성공 상태를 처리
  */
 export function DashboardInvoiceLoader() {
-  const router = useRouter()
-
   // Zustand 스토어에서 상태와 액션 구독
   const { invoices, isLoading, error, fetchInvoices, refreshInvoices } =
     useInvoiceStore()
@@ -136,35 +132,12 @@ export function DashboardInvoiceLoader() {
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // --------------------------------------------------------
-  // 세션 만료 처리 콜백
-  // 401 응답 감지 시 로그아웃 후 로그인 페이지로 리다이렉트
-  // --------------------------------------------------------
-  const handleUnauthorized = useCallback(async () => {
-    try {
-      // 서버에서 세션 쿠키 삭제
-      await adminLogout()
-    } catch (logoutError) {
-      console.error('로그아웃 처리 중 오류:', logoutError)
-    } finally {
-      // 로그인 페이지로 리다이렉트
-      router.push('/dashboard')
-      router.refresh()
-    }
-  }, [router])
-
-  // --------------------------------------------------------
-  // 네트워크 오류 자동 재시도 핸들러
-  // 최대 MAX_RETRY_COUNT회까지 RETRY_DELAY_MS 간격으로 재시도
+  // 데이터 페칭 핸들러
   // --------------------------------------------------------
   const handleFetchWithRetry = useCallback(async () => {
     retryCountRef.current = 0
-
-    const attemptFetch = async () => {
-      await fetchInvoices(() => void handleUnauthorized())
-    }
-
-    await attemptFetch()
-  }, [fetchInvoices, handleUnauthorized])
+    await fetchInvoices()
+  }, [fetchInvoices])
 
   // --------------------------------------------------------
   // 컴포넌트 마운트 시 데이터 페칭
@@ -236,7 +209,7 @@ export function DashboardInvoiceLoader() {
 
       // 일정 시간 후 자동 재시도
       retryTimerRef.current = setTimeout(() => {
-        void refreshInvoices(() => void handleUnauthorized())
+        void refreshInvoices()
       }, RETRY_DELAY_MS)
     } else if (isNetworkError && retryCountRef.current >= MAX_RETRY_COUNT) {
       // 최대 재시도 횟수 초과 시 최종 실패 토스트
@@ -244,7 +217,7 @@ export function DashboardInvoiceLoader() {
         description: `${MAX_RETRY_COUNT}회 재시도 후에도 연결되지 않았습니다. 인터넷 연결을 확인해주세요.`,
       })
     }
-  }, [error, refreshInvoices, handleUnauthorized])
+  }, [error, refreshInvoices])
 
   // --------------------------------------------------------
   // 수동 재시도 핸들러 (버튼 클릭)
@@ -256,8 +229,8 @@ export function DashboardInvoiceLoader() {
     if (retryTimerRef.current) {
       clearTimeout(retryTimerRef.current)
     }
-    void refreshInvoices(() => void handleUnauthorized())
-  }, [refreshInvoices, handleUnauthorized])
+    void refreshInvoices()
+  }, [refreshInvoices])
 
   // --------------------------------------------------------
   // 성공 시 재시도 카운터 초기화 및 완료 토스트

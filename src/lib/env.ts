@@ -8,8 +8,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url().optional(),
   NOTION_TOKEN: z.string().optional(),
   NOTION_INVOICES_DB_ID: z.string().optional(),
-  NOTION_ITEMS_DB_ID: z.string().optional(),
-  ADMIN_PASSWORD_HASH: z.string().optional(),
+  // NOTION_ITEMS_DB_ID 불필요: 양방향 relation으로 Invoice에서 직접 조회
 })
 
 export const env = envSchema.parse({
@@ -18,8 +17,6 @@ export const env = envSchema.parse({
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   NOTION_TOKEN: process.env.NOTION_TOKEN,
   NOTION_INVOICES_DB_ID: process.env.NOTION_INVOICES_DB_ID,
-  NOTION_ITEMS_DB_ID: process.env.NOTION_ITEMS_DB_ID,
-  ADMIN_PASSWORD_HASH: process.env.ADMIN_PASSWORD_HASH,
 })
 
 export type Env = z.infer<typeof envSchema>

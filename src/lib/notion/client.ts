@@ -11,9 +11,8 @@ export const notionClient = new Client({
 
 /**
  * 데이터베이스 ID
- * 환경변수에서 주입받아 관리
+ * 항목(Items)은 양방향 relation으로 Invoice 페이지에서 직접 조회
  */
 export const DATABASES = {
   INVOICES: env.NOTION_INVOICES_DB_ID,
-  ITEMS: env.NOTION_ITEMS_DB_ID,
 } as const
