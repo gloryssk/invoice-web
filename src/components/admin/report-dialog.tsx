@@ -75,26 +75,33 @@ export function ReportDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        {/* 헤더 */}
-        <DialogHeader>
-          <DialogTitle>신고 처리</DialogTitle>
-          <DialogDescription>
-            {invoice.invoiceNumber} - {invoice.clientName}
+      {/* Dialog 전체 배경: 흰색 기반으로 깔끔하게 */}
+      <DialogContent className="bg-white p-6 sm:max-w-[500px]">
+        {/* 헤더: 타이틀과 견적서 정보 */}
+        <DialogHeader className="space-y-1">
+          <DialogTitle className="text-lg font-semibold text-slate-900">
+            신고 처리
+          </DialogTitle>
+          <DialogDescription className="text-sm text-slate-500">
+            {invoice.invoiceNumber} &mdash; {invoice.clientName}
           </DialogDescription>
         </DialogHeader>
 
+        {/* 구분선 */}
+        <div className="my-1 border-t border-slate-100" />
+
         {/* 본문 */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           {/* 신고 내용 (읽기 전용) */}
           <div className="space-y-2">
             <Label className="text-sm font-medium text-slate-700">
               신고 내용
             </Label>
+            {/* 텍스트 가독성: text-slate-800로 명확히 지정 */}
             <Textarea
               value={currentReport?.reportContent || '신고가 접수되었습니다.'}
               readOnly
-              className="resize-none bg-slate-50 text-sm"
+              className="resize-none border-slate-200 bg-slate-50 text-sm text-slate-800 placeholder:text-slate-400 focus-visible:ring-slate-300"
               rows={4}
             />
           </div>
@@ -104,11 +111,13 @@ export function ReportDialog({
             <Label className="text-sm font-medium text-slate-700">
               처리 상태
             </Label>
+            {/* 라디오 옵션 컨테이너: 연한 배경으로 구역 강조 */}
             <RadioGroup
               value={selectedStatus}
               onValueChange={value => setSelectedStatus(value as ReportStatus)}
+              className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3"
             >
-              {/* 처리중 */}
+              {/* 처리중 옵션 */}
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="pending" id="status-pending" />
                 <Label
@@ -119,7 +128,7 @@ export function ReportDialog({
                 </Label>
               </div>
 
-              {/* 처리완료 */}
+              {/* 처리완료 옵션 */}
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="completed" id="status-completed" />
                 <Label
@@ -134,22 +143,32 @@ export function ReportDialog({
 
           {/* 마지막 수정 시각 */}
           {currentReport?.updatedAt && (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               마지막 수정:{' '}
               {new Date(currentReport.updatedAt).toLocaleString('ko-KR')}
             </p>
           )}
         </div>
 
+        {/* 구분선 */}
+        <div className="mt-1 border-t border-slate-100" />
+
         {/* 푸터: 취소/저장 버튼 */}
-        <DialogFooter className="gap-2 sm:gap-0">
-          <Button type="button" variant="outline" onClick={handleCancel}>
+        <DialogFooter className="gap-2 pt-1 sm:gap-2">
+          {/* 취소 버튼: 테두리 스타일, 텍스트 명확히 */}
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleCancel}
+            className="border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+          >
             취소
           </Button>
+          {/* 저장 버튼: 진한 배경 + 흰 글씨로 대비 확보 */}
           <Button
             type="button"
             onClick={handleSave}
-            className="bg-slate-900 hover:bg-slate-800"
+            className="bg-slate-900 text-white hover:bg-slate-700"
           >
             저장
           </Button>
