@@ -109,3 +109,20 @@ export const invoiceCreateSchema = invoiceSchema.omit({ id: true })
 export const invoiceUpdateSchema = invoiceSchema
   .omit({ id: true, slug: true, invoiceNumber: true, issueDate: true })
   .partial()
+
+/**
+ * 신고 처리 상태
+ * - pending: 처리 중
+ * - completed: 처리 완료
+ */
+export type ReportStatus = 'pending' | 'completed'
+
+/**
+ * 견적서별 신고 데이터
+ */
+export interface ReportEntry {
+  slug: string
+  status: ReportStatus
+  reportContent: string // 신고 내용 텍스트
+  updatedAt: string // ISO 날짜
+}

@@ -283,6 +283,48 @@ Phase 5~6의 모든 변경사항을 종합 검증하고 배포 준비를 완료�
 
 ---
 
+### Phase 8: 신고 처리 기능
+
+관리자 대시보드에서 견적서별 신고 내용을 확인하고 처리 상태를 관리할 수 있는 기능을 추가합니다.
+신고 상태 데이터는 localStorage + Zustand persist로 관리됩니다.
+
+---
+
+- **Task 023: 관리자 대시보드 신고 처리 기능 추가**
+  - 작업 파일: `/tasks/023-report-management.md`
+  - 예상 소요 시간: 3~4시간
+  - 선행 작업: Task 021 (대시보드 컬럼 구조)
+
+  **배경**
+
+  관리자가 대시보드에서 각 견적서에 대한 신고 내용을 확인하고, 처리 상태를 '처리중' 또는 '처리완료'로 관리할 필요가 있습니다.
+
+  **수정 대상 파일**
+  - `src/types/invoice.ts` — `ReportStatus`, `ReportEntry` 타입 추가
+  - `src/store/reportStore.ts` — 신고 Zustand 스토어 신규 생성 (localStorage persist)
+  - `src/components/admin/report-status-badge.tsx` — 신고 상태 배지 컴포넌트 신규 생성
+  - `src/components/admin/report-dialog.tsx` — 신고 처리 Dialog 컴포넌트 신규 생성
+  - `src/components/admin/invoice-table.tsx` — '신고내용' 컬럼 삽입, Dialog 통합
+
+  **구현 사항**
+  - 타입: `ReportStatus` ('pending' | 'completed'), `ReportEntry` (slug, status, reportContent, updatedAt)
+  - 스토어: `useReportStore` (Zustand + localStorage persist)
+    · `updateReport(slug, status)`: 상태 업데이트
+    · `getReport(slug)`: 신고 데이터 조회
+  - 배지 컴포넌트: 상태별 색상 (신고없음: 회색, 처리중: 노란색, 처리완료: 초록색)
+  - Dialog: 견적번호/클라이언트명 표시, 신고내용 읽기전용, 라디오 버튼으로 상태 선택, 저장/취소 버튼
+  - 테이블: '상태' 컬럼과 '액션' 컬럼 사이에 '신고내용' 컬럼 삽입
+
+  **수락 기준**
+  - [ ] `/dashboard` 접근 시 테이블에 '신고내용' 컬럼이 표시됨
+  - [ ] 신고 배지 클릭 시 Dialog 팝업 오픈
+  - [ ] Dialog에서 상태 변경 후 저장 → 테이블의 배지 색상 변경
+  - [ ] 브라우저 새로고침 후 → localStorage에서 복원되어 상태 유지
+  - [ ] 취소 버튼 클릭 → 변경사항 미반영
+  - [ ] `npm run check-all` 통과
+
+---
+
 ## 작업 요약
 
 | Task     | 제목                                | Phase   | 예상 소요 시간 | 선행 작업    |
@@ -293,8 +335,9 @@ Phase 5~6의 모든 변경사항을 종합 검증하고 배포 준비를 완료�
 | Task 020 | 홈 화면 색상 통일                   | Phase 6 | 2~3시간        | Task 019     |
 | Task 021 | 관리자 대시보드 색상 통일           | Phase 6 | 3~4시간        | Task 019     |
 | Task 022 | 전체 UI 통합 테스트 및 회귀 검증    | Phase 7 | 2~3시간        | 017~021 전체 |
+| Task 023 | 관리자 대시보드 신고 처리 기능 추가 | Phase 8 | 3~4시간        | Task 021     |
 
-**총 예상 소요 시간**: 12~20시간 (약 2~3일)
+**총 예상 소요 시간**: 15~24시간 (약 3~4일)
 
 ---
 

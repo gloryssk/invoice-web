@@ -3,14 +3,17 @@
  *
  * 구조:
  * - shadcn/ui Table 컴포넌트 활용
- * - 컬럼: 견적번호 | 클라이언트명 | 금액 | 발행일 | 유효기간 | 상태 | 액션
+ * - 컬럼: 견적번호 | 클라이언트명 | 금액 | 발행일 | 유효기간 | 상태 | 신고내용 | 액션
  * - 상태 배지: 승인(녹색) / 대기(파랑) / 작성중(회색) / 만료(적갈색)
+ * - 신고 배지: 신고 없음(회색) / 처리중(노란색) / 처리완료(초록색)
  * - 액션: 미리보기 버튼, 링크 복사 버튼
  * - TASK-008: Invoice 타입으로 교체, 링크 관리 컴포넌트 통합
+ * - TASK-023: 신고 처리 기능 추가, ReportDialog 통합
  */
 
 'use client'
 
+import { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -27,6 +30,9 @@ import {
   PreviewLinkButton,
   useLinkManager,
 } from '@/components/admin/link-manager'
+import { ReportStatusBadge } from '@/components/admin/report-status-badge'
+import { ReportDialog } from '@/components/admin/report-dialog'
+import { useReportStore } from '@/store/reportStore'
 
 // ============================================================
 // 유틸리티 함수
@@ -122,6 +128,21 @@ export function InvoiceTable({ invoices, className }: InvoiceTableProps) {
   // 링크 관리 훅 (복사 상태 관리)
   const { copyLink, copyingSlug, copiedSlug } = useLinkManager()
 
+  // 신고 스토어에서 데이터 구독 (화면 업데이트 감지)
+  const reports = useReportStore(state => state.reports)
+
+  // Dialog 상태 관리
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null)
+
+  // ============================================================
+  // Dialog 오픈 핸들러
+  // ============================================================
+  const handleOpenDialog = (invoice: Invoice) => {
+    setSelectedInvoice(invoice)
+    setDialogOpen(true)
+  }
+
   return (
     <div
       className={cn(
@@ -151,6 +172,9 @@ export function InvoiceTable({ invoices, className }: InvoiceTableProps) {
             <TableHead className="w-[100px] text-center font-semibold text-slate-700">
               상태
             </TableHead>
+            <TableHead className="w-[110px] text-center font-semibold text-slate-700">
+              신고내용
+            </TableHead>
             <TableHead className="w-[120px] text-center font-semibold text-slate-700">
               액션
             </TableHead>
@@ -163,7 +187,7 @@ export function InvoiceTable({ invoices, className }: InvoiceTableProps) {
             /* 데이터 없음 상태 */
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="h-24 text-center text-slate-400"
               >
                 표시할 견적서가 없습니다
@@ -205,6 +229,14 @@ export function InvoiceTable({ invoices, className }: InvoiceTableProps) {
                   <StatusBadge status={invoice.status} />
                 </TableCell>
 
+                {/* 신고내용 배지 */}
+                <TableCell className="text-center">
+                  <ReportStatusBadge
+                    status={reports[invoice.slug]?.status}
+                    onClick={() => handleOpenDialog(invoice)}
+                  />
+                </TableCell>
+
                 {/* 액션 버튼 */}
                 <TableCell>
                   <div className="flex items-center justify-center gap-1">
@@ -233,6 +265,15 @@ export function InvoiceTable({ invoices, className }: InvoiceTableProps) {
           )}
         </TableBody>
       </Table>
+
+      {/* 신고 처리 Dialog */}
+      {selectedInvoice && (
+        <ReportDialog
+          invoice={selectedInvoice}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      )}
     </div>
   )
 }
