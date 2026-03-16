@@ -234,9 +234,10 @@ export function PreviewLinkButton({
 }: PreviewLinkButtonProps) {
   /**
    * 견적서 뷰어 페이지로 이동 (새 탭)
+   * 대시보드에서의 진입을 표시하는 from=dashboard 파라미터 포함
    */
   const handlePreview = useCallback(() => {
-    const url = `/view/${slug}`
+    const url = `/view/${slug}?from=dashboard`
     // 새 탭으로 열기
     window.open(url, '_blank', 'noopener,noreferrer')
   }, [slug])

@@ -1,555 +1,330 @@
-# Invoice Web Viewer 개발 로드맵
+# Invoice Web Viewer 고도화 로드맵 (v2.0)
 
-노션 기반 견적서를 웹에서 전문적으로 조회하고 관리하는 애플리케이션 개발 계획
+MVP 완성 이후 UX 개선과 브랜드 일관성 강화를 위한 고도화 작업 계획입니다.
 
 ---
 
 ## 개요
 
-**Invoice Web Viewer**는 노션에서 작성한 견적서를 클라이언트에게 전문적인 웹 인터페이스로 제공하고, PDF 저장 기능을 통해 공유 및 관리의 편의성을 높이는 서비스입니다.
+Invoice Web Viewer MVP(v1.0)는 16개 작업을 통해 핵심 기능을 완성했습니다.
+이번 고도화(v2.0)에서는 다음 세 가지 영역을 집중 개선합니다.
 
-### 핵심 기능
+- **네비게이션 개선**: 관리자 대시보드의 목록 복귀 버튼 추가로 워크플로우 효율화
+- **클라이언트 UX 개선**: 견적서 뷰어의 닫기 버튼 추가로 사용자 이탈 경로 명확화
+- **브랜드 컬러 통일**: 터키색(#00A8A8) 기반으로 전체 화면 색상 체계 통합
 
-- **공개 견적서 뷰어**: 클라이언트가 노션 계정 없이 링크 클릭만으로 견적서 조회
-- **PDF 다운로드**: 전문적인 형식의 PDF 자동 생성 및 1클릭 다운로드
-- **관리자 대시보드**: 패스워드 기반 인증으로 모든 견적서 목록 조회 및 링크 관리
-- **노션 API 연동**: 노션 데이터베이스와 실시간 동기화 및 ISR 캐싱
-- **반응형 디자인**: 모바일, 태블릿, 데스크톱 모든 디바이스 최적화
+### 현재 상태 (v1.0 완료 기준)
 
-### 페이지 구성
-
-| 경로            | 기능                             | 권한              |
-| --------------- | -------------------------------- | ----------------- |
-| `/view/[slug]`  | 공개 견적서 조회 및 PDF 다운로드 | 모든 사용자       |
-| `/dashboard`    | 관리자 인증 및 견적서 관리       | 관리자 (패스워드) |
-| `/api/invoices` | 노션 API 동기화                  | 서버/관리자       |
+| 구분      | 상태   | 비고                          |
+| --------- | ------ | ----------------------------- |
+| MVP 전체  | 완료   | TASK-001 ~ TASK-016 모두 완료 |
+| 배포 준비 | 완료   | Vercel 배포 가이드 작성 완료  |
+| 고도화    | 미시작 | 이 로드맵에서 정의            |
 
 ---
 
 ## 개발 워크플로우
 
-### 1. 작업 계획
+1. **작업 계획**
+   - 기존 코드베이스를 학습하고 현재 상태를 파악
+   - 새로운 작업을 포함하도록 `ROADMAP.md` 업데이트
+   - 우선순위 작업은 마지막 완료된 작업 다음에 삽입
 
-- 기존 코드베이스를 학습하고 현재 상태를 파악
-- 새로운 작업을 포함하도록 `ROADMAP.md` 업데이트
-- 우선순위 작업은 마지막 완료된 작업 다음에 삽입
+2. **작업 생성**
+   - `/tasks` 디렉토리에 새 작업 파일 생성
+   - 명명 형식: `XXX-description.md` (예: `017-close-button.md`)
+   - 고수준 명세서, 관련 파일, 수락 기준, 구현 단계 포함
+   - API/비즈니스 로직 작업 시 "## 테스트 체크리스트" 섹션 필수 포함
+   - 기존 완료 작업(예: `016-deployment.md`)을 예시로 참조하되, 새 작업 파일은 빈 박스로 시작
 
-### 2. 작업 생성
+3. **작업 구현**
+   - 작업 파일의 명세서를 따름
+   - 각 단계 후 작업 파일 내 진행 상황 업데이트
+   - 각 단계 완료 후 중단하고 추가 지시를 기다림
 
-- 기존 코드베이스를 학습하고 현재 상태를 파악
-- `/tasks` 디렉토리에 새 작업 파일 생성
-- 명명 형식: `TASK-XXX-description.md` (예: `TASK-001-project-setup.md`)
-- 고수준 명세서, 관련 파일, 수락 기준, 구현 단계 포함
-- **API/비즈니스 로직 작업 시 "## 테스트 체크리스트" 섹션 필수 포함 (Playwright MCP 테스트 시나리오 작성)**
-- 예시를 위해 `/tasks` 디렉토리의 마지막 완료된 작업 참조
-- 새 작업 문서에는 빈 체크박스와 변경 사항 요약 없음 (초기 상태)
-
-### 3. 작업 구현
-
-- 작업 파일의 명세서를 따름
-- 기능과 기능성 구현
-- **API 연동 및 비즈니스 로직 구현 시 Playwright MCP로 테스트 수행 필수**
-- 각 단계 후 작업 파일 내 단계 진행 상황 업데이트
-- 구현 완료 후 Playwright MCP를 사용한 E2E 테스트 실행
-- 테스트 통과 확인 후 다음 단계로 진행
-- 각 단계 완료 후 중단하고 추가 지시를 기다림
-
-### 4. 로드맵 업데이트
-
-- 로드맵에서 완료된 작업을 체크박스로 표시
+4. **로드맵 업데이트**
+   - 로드맵에서 완료된 작업을 체크박스(완료)로 표시
 
 ---
 
 ## 개발 단계
 
-### Phase 1: MVP 기초 (2주) ✅
+---
 
-**목표**: 프로젝트 구조 완성 및 핵심 뷰어 기능 구현
-**상태**: 진행 중 (4/5 Tasks 완료)
+### Phase 5: 네비게이션 및 UX 개선
+
+MVP에서 누락된 사용자 이동 경로를 보완하고, 클라이언트 뷰어에 종료 수단을 제공합니다.
+두 Task는 서로 독립적이므로 병렬 진행이 가능합니다.
 
 ---
 
-#### TASK-001: 프로젝트 설정 및 기본 구조 구성 ✅ - 완료
+- **Task 017: 관리자 대시보드 상세페이지 목록 복귀 버튼 추가** - 우선순위
+  - 작업 파일: `/tasks/017-dashboard-back-button.md`
+  - 예상 소요 시간: 2~4시간
 
-**파일**: `/tasks/TASK-001-project-setup.md`
-**의존성**: 없음
-**예상 기간**: 1-2일
+  **배경**
 
-- [x] Next.js 15 App Router 기반 폴더 구조 생성 (`/view/[slug]`, `/dashboard`, `/api/invoices`)
-- [x] 필수 의존성 설치 (`@notionhq/client`, `html2pdf.js`, `js-cookie`, `zustand`)
-- [x] 환경 변수 설정 (`.env.local` 템플릿: `NOTION_TOKEN`, `NOTION_DATABASE_ID`, `ADMIN_PASSWORD`)
-- [x] ESLint, Prettier, Husky 설정 확인 및 보완
-- [x] `src/app/(public)/view/[slug]/page.tsx` 빈 페이지 생성
-- [x] `src/app/(admin)/dashboard/page.tsx` 빈 페이지 생성
-- [x] `src/app/api/invoices/route.ts` 빈 라우트 생성
-- [x] 공통 레이아웃 컴포넌트 골격 구성
+  현재 관리자는 대시보드에서 견적서 미리보기([링크 복사] 또는 미리보기 아이콘)를 클릭하면
+  `/view/[slug]` 페이지로 이동하지만 목록으로 돌아오는 명시적 UI가 없습니다.
+  브라우저 뒤로가기에만 의존하는 상황이므로, 상단 헤더 바에 "목록으로" 버튼을 추가합니다.
 
----
+  **수정 대상 파일**
+  - `src/components/invoice/header-bar.tsx` — 버튼 추가 (조건부 렌더링)
+  - `src/app/view/[slug]/page.tsx` — 관리자 접근 판별을 위한 `searchParams` 또는 `referrer` 처리
+  - `src/components/admin/link-manager.tsx` — 미리보기 링크에 `?from=dashboard` 쿼리 파라미터 추가
 
-#### TASK-002: TypeScript 타입 정의 및 인터페이스 설계 ✅ - 완료
+  **구현 사항**
+  - URL 쿼리 파라미터(`?from=dashboard`)로 관리자 진입 여부 판별
+  - `HeaderBar` 컴포넌트에 `showBackButton?: boolean` 및 `backHref?: string` Props 추가
+  - "목록으로" 버튼: 좌측 영역에 `ChevronLeft` 아이콘 + 텍스트로 구성
+  - 버튼 스타일: 기존 헤더 버튼과 동일한 `variant="outline"` + 헤더 색상 기준 적용
+  - 모바일에서는 아이콘만 표시, 데스크톱에서는 텍스트 함께 표시
+  - 인쇄 모드에서는 숨김 처리(`print:hidden`)
 
-**파일**: `/tasks/TASK-002-type-definitions.md`
-**의존성**: TASK-001
-**예상 기간**: 1일
-
-- [x] `Invoice` 인터페이스 정의 (`src/types/invoice.ts`)
-  - `id`, `slug`, `invoiceNumber`, `title`, `clientName`, `clientContact` 등 전체 필드
-- [x] `InvoiceItem` 인터페이스 정의 (`itemName`, `description`, `quantity`, `unitPrice`, `amount`, `order`)
-- [x] `AdminSession` 인터페이스 정의 (`sessionId`, `isAuthenticated`, `authenticatedAt`, `expiresAt`)
-- [x] 노션 API 응답 타입 정의 (`NotionInvoiceResponse`, `NotionInvoiceItemResponse`)
-- [x] 공통 유틸리티 타입 정의 (API 응답 래퍼, 에러 타입 등)
-- [x] Zod 스키마 정의 (`invoiceSchema`, `adminLoginSchema`)
-
----
-
-#### TASK-003: 노션 API 연동 및 데이터 페칭 구현 ✅ - 완료
-
-**파일**: `/tasks/TASK-003-notion-api-integration.md`
-**의존성**: TASK-001, TASK-002
-**예상 기간**: 2-3일
-
-- [x] 노션 클라이언트 초기화 (`src/lib/notion/client.ts`)
-- [x] 견적서 전체 목록 조회 함수 구현 (`getAllInvoices`)
-- [x] 단일 견적서 조회 함수 구현 (`getInvoiceBySlug`)
-- [x] 노션 응답 데이터를 `Invoice` 타입으로 정규화하는 매퍼 함수 구현 (`src/lib/notion/mapper.ts`)
-- [x] API 라우트 구현 (`/api/invoices` - GET 전체 목록, GET 단일 항목)
-- [x] ISR 캐싱 설정 (뷰어: TTL 1시간, 대시보드: TTL 5분)
-- [x] 에러 처리 (API 오류, 네트워크 오류, 데이터 없음)
-- [x] **테스트 체크리스트**: Playwright MCP로 API 응답 검증
+  **수락 기준**
+  - [ ] 미리보기 링크 클릭 시 `/view/[slug]?from=dashboard` 형태로 이동
+  - [ ] 뷰어 페이지 헤더에 "목록으로" 버튼이 좌측에 표시됨
+  - [ ] 버튼 클릭 시 `/dashboard`로 이동
+  - [ ] `?from=dashboard` 없이 접근(클라이언트 일반 접근)한 경우 버튼 미표시
+  - [ ] 인쇄 및 PDF 생성 시 버튼이 포함되지 않음
+  - [ ] 모바일 반응형 정상 동작
 
 ---
 
-#### TASK-004: 공개 견적서 뷰어 UI 구현 (더미 데이터) ✅ - 완료
+- **Task 018: 견적서 뷰어 초기화면 닫기 버튼 추가**
+  - 작업 파일: `/tasks/018-viewer-close-button.md`
+  - 예상 소요 시간: 2~4시간
 
-**파일**: `/tasks/TASK-004-invoice-viewer-ui.md`
-**의존성**: TASK-001, TASK-002
-**예상 기간**: 2-3일
+  **배경**
 
-- [x] 견적서 뷰어 페이지 레이아웃 구현 (`/view/[slug]/page.tsx`)
-- [x] 헤더 컴포넌트 (회사 로고, PDF 저장 버튼, 인쇄 버튼)
-- [x] 발행사 정보 섹션 컴포넌트 (`src/components/invoice/IssuerSection.tsx`)
-- [x] 견적서 기본 정보 섹션 컴포넌트 (견적번호, 제목, 발행일, 유효기간)
-- [x] 클라이언트 정보 섹션 컴포넌트 (`src/components/invoice/ClientSection.tsx`)
-- [x] 견적 항목 테이블 컴포넌트 (품목명, 설명, 수량, 단가, 금액)
-- [x] 합계 영역 컴포넌트 (소계, VAT 10%, 총액 자동 계산)
-- [x] 추가 정보 영역 (비고, 결제 조건, 유효기간 안내)
-- [x] 반응형 레이아웃 (모바일 카드형, 태블릿 2단, 데스크톱 기본)
-- [x] 404/에러 페이지 구현
+  클라이언트가 견적서(`/view/[slug]`)를 확인한 후 페이지를 닫으려면 브라우저 탭을 직접 닫거나
+  뒤로가기를 사용해야 합니다. 명시적인 "닫기" 버튼을 제공하여 사용자가 페이지를 쉽게 벗어날 수
+  있도록 합니다.
 
----
+  **수정 대상 파일**
+  - `src/components/invoice/header-bar.tsx` — 닫기 버튼 추가
+  - (선택) `src/components/invoice/invoice-viewer.tsx` — 닫기 버튼 Props 전달
 
-#### TASK-005: 견적서 뷰어 노션 API 실제 연동 ✅ - 완료
+  **구현 사항**
+  - `HeaderBar` 우측 버튼 그룹에 "닫기" 버튼 추가 (`X` 아이콘, `lucide-react`의 `X`)
+  - 닫기 동작: `window.history.length > 1` 이면 `window.history.back()`, 아니면 `window.close()`
+  - 버튼 스타일: `variant="outline"` + 기존 헤더 버튼과 동일한 색상 처리
+  - 모바일: 아이콘만 + 툴팁("닫기"), 데스크톱: 아이콘 + "닫기" 텍스트
+  - 인쇄 모드에서 숨김 처리(`print:hidden`)
+  - `?from=dashboard`로 진입한 경우 닫기 버튼 대신 "목록으로" 버튼 표시 (Task 017과 중복 방지)
 
-**파일**: `/tasks/TASK-005-viewer-api-integration.md`
-**의존성**: TASK-003, TASK-004
-**예상 기간**: 1-2일
-
-- [x] 더미 데이터를 실제 노션 API 호출로 교체
-- [x] Server Component에서 `getInvoiceBySlug` 호출 구현
-- [x] ISR 적용 (`revalidate: 3600`)
-- [x] `generateMetadata` 구현 (OG 태그, 페이지 타이틀)
-- [x] `generateStaticParams` 구현 (정적 경로 사전 생성)
-- [x] 로딩 상태 처리 (`loading.tsx`)
-- [x] 에러 상태 처리 (`error.tsx`, `not-found.tsx`)
-- [x] **테스트 체크리스트**: Playwright MCP로 견적서 페이지 렌더링 E2E 테스트
+  **수락 기준**
+  - [ ] 뷰어 헤더 우측에 "닫기" 버튼이 표시됨
+  - [ ] 버튼 클릭 시 이전 페이지로 이동하거나 탭을 닫음
+  - [ ] `?from=dashboard`로 진입한 경우 닫기 버튼이 표시되지 않음 (목록으로 버튼이 대체)
+  - [ ] 인쇄 및 PDF 생성 시 버튼이 포함되지 않음
+  - [ ] 모바일 반응형 정상 동작
 
 ---
 
-### Phase 2: 관리자 기능 (1주) ✅
+### Phase 6: 브랜드 컬러 통일
 
-**목표**: 관리자 인증 및 견적서 관리 대시보드 완성
-**상태**: 완료 (3/3 Tasks 완료)
+견적서 뷰어의 헤더 색상(터키색/틸, `#00A8A8`)을 홈 화면과 관리자 대시보드에도 적용하여
+전체 서비스의 색상 체계를 통일합니다.
 
----
-
-#### TASK-006: 관리자 인증 페이지 구현 ✅ - 완료
-
-**파일**: `/tasks/TASK-006-admin-auth.md`
-**의존성**: TASK-001, TASK-002
-**예상 기간**: 1-2일
-
-- [x] 로그인 페이지 UI 구현 (`/dashboard/page.tsx` 미인증 상태)
-  - [x] 중앙 정렬 카드 레이아웃 (최대 너비 400px)
-  - [x] 패스워드 입력 폼 (마스킹, placeholder)
-  - [x] 로그인 버튼 (로딩 상태, 비활성화 처리)
-  - [x] 에러 메시지 영역
-- [x] React Hook Form + Zod 폼 검증 구현 (`adminLoginSchema`)
-- [x] Server Action 구현 (`src/lib/actions/auth.ts`)
-  - [x] 환경 변수 `ADMIN_PASSWORD`와 비교
-  - [x] bcrypt 해시 검증
-  - [x] 쿠키 기반 세션 생성 (유효시간 1시간)
-- [x] 미들웨어 설정 (`src/middleware.ts`) - 미인증 접근 시 리다이렉트
-- [x] 로그아웃 Server Action 구현
-- [x] **테스트 체크리스트**: Playwright MCP로 인증 플로우 E2E 테스트 (성공/실패/세션 만료)
+> 헤더 글꼴 색상은 항상 흰색(`#FFFFFF`)으로 고정합니다.
 
 ---
 
-#### TASK-007: 관리자 대시보드 견적서 목록 UI 구현 (더미 데이터) ✅ - 완료
+- **Task 019: Tailwind CSS 브랜드 컬러 토큰 정의** - 우선순위
+  - 작업 파일: `/tasks/019-brand-color-tokens.md`
+  - 예상 소요 시간: 1~2시간
+  - Task 020, Task 021의 선행 작업
 
-**파일**: `/tasks/TASK-007-dashboard-ui.md`
-**의존성**: TASK-001, TASK-002, TASK-006
-**예상 기간**: 2일
+  **배경**
 
-- [x] 대시보드 레이아웃 구현 (헤더: 페이지 제목 + 로그아웃 버튼)
-- [x] 검색 바 컴포넌트 (실시간 필터링, 지우기 버튼)
-- [x] 정렬 드롭다운 컴포넌트 (최신순/오래된순)
-- [x] 견적서 목록 테이블 컴포넌트
-  - [x] 컬럼: 견적번호, 클라이언트명, 금액, 발행일, 유효기간, 액션
-  - [x] 상태 배지 (유효: 녹색, 만료: 회색, 곧 만료: 주황색)
-  - [x] 액션 버튼 (미리보기 아이콘, 링크 복사 아이콘)
-- [x] 모바일 카드 리스트 레이아웃 (< 640px)
-- [x] 빈 상태 컴포넌트 (견적서 없음, 검색 결과 없음)
-- [x] 페이지네이션 컴포넌트 (다음/이전 버튼)
-- [x] 푸터 (총 견적서 수 표시)
+  현재 색상이 파일마다 하드코딩(`bg-blue-600`, `bg-primary/95`, `bg-slate-50` 등)되어 있어
+  일괄 변경이 어렵습니다. Tailwind CSS v4 CSS 변수 기반 토큰을 정의하여 단일 지점에서 관리합니다.
 
----
+  **수정 대상 파일**
+  - `src/app/globals.css` — CSS 변수 및 Tailwind 커스텀 토큰 정의
 
-#### TASK-008: 대시보드 링크 관리 및 노션 API 연동 ✅ - 완료
+  **구현 사항**
+  - `--color-brand-primary: #00A8A8` (터키색/틸) 정의
+  - `--color-brand-primary-foreground: #FFFFFF` (헤더 텍스트 흰색) 정의
+  - `--color-brand-primary-hover: #008080` (호버 시 약간 어두운 틸) 정의
+  - `--color-brand-primary-border: #007A7A` (테두리 색상) 정의
+  - `--color-brand-surface: #F0FAFA` (틸 계열 배경 서피스) 정의
+  - Tailwind 유틸리티 클래스 매핑: `bg-brand`, `text-brand`, `border-brand` 등
+  - 기존 `primary` 색상 토큰을 터키색으로 업데이트 (`src/app/globals.css` `:root` 블록)
 
-**파일**: `/tasks/TASK-008-dashboard-integration.md`
-**의존성**: TASK-003, TASK-007
-**예상 기간**: 1-2일
-
-- [x] 더미 데이터를 실제 노션 API 데이터로 교체
-- [x] 클라이언트 측 실시간 검색 및 정렬 로직 구현 (Zustand 상태 관리)
-- [x] 링크 복사 기능 구현 (`navigator.clipboard.writeText`)
-  - [x] 링크 형식: `https://{domain}/view/{slug}`
-  - [x] 복사 완료 토스트 메시지 (3초 후 자동 사라짐)
-  - [x] 복사 실패 시 에러 토스트
-- [x] 미리보기 버튼 (새 탭에서 `/view/[slug]` 열기)
-- [x] 세션 만료 처리 (자동 로그아웃 + 메시지)
-- [x] **테스트 체크리스트**: Playwright MCP로 대시보드 전체 플로우 E2E 테스트
+  **수락 기준**
+  - [ ] `globals.css`에 브랜드 컬러 CSS 변수가 정의됨
+  - [ ] `bg-primary`, `text-primary-foreground` 등의 기존 유틸리티 클래스가 터키색으로 매핑됨
+  - [ ] `npm run build` 및 `npm run type-check` 통과
+  - [ ] 기존 견적서 뷰어 헤더 색상이 터키색으로 자동 반영됨 (기존 코드 변경 없이)
 
 ---
 
-### Phase 3: PDF 및 UI 다듬기 (1주) ✅
+- **Task 020: 홈 화면 색상 통일 (터키색 적용)**
+  - 작업 파일: `/tasks/020-home-color-update.md`
+  - 선행 작업: Task 019
+  - 예상 소요 시간: 2~3시간
 
-**목표**: PDF 다운로드 기능 완성 및 전체 UI/UX 완성도 향상
-**상태**: 완료 (4/4 Tasks 완료)
+  **배경**
 
----
+  홈 화면(`/`, `src/app/page.tsx`)은 현재 `bg-white`, `text-slate-*` 계열로만 구성되어
+  견적서 뷰어의 터키색 헤더와 시각적 연속성이 없습니다.
 
-#### TASK-009: PDF 다운로드 기능 구현 ✅ - 완료
+  **수정 대상 파일**
+  - `src/app/page.tsx` — 헤더 및 카드 강조 색상 업데이트
 
-**파일**: `/tasks/TASK-009-pdf-download.md`
-**의존성**: TASK-004, TASK-005
-**예상 기간**: 1-2일
+  **구현 사항**
+  - 우측 상단 "관리자 대시보드" 링크 버튼: 배경을 `bg-[#00A8A8]`, 텍스트를 `text-white`로 변경
+  - 섹션 타이틀(`견적서 조회 시스템`) 강조: `text-[#00A8A8]` 또는 언더라인 액센트 적용
+  - 카드 아이콘 색상: `text-slate-700` → `text-[#00A8A8]`
+  - 카드 호버 테두리: `hover:border-[#00A8A8]` 추가하여 브랜드 컬러 강조
+  - 페이지 배경은 `bg-white` 유지 (컨텐츠 가독성 보장)
 
-- [x] `html2pdf.js` 라이브러리 설치 및 설정
-- [x] PDF 생성 유틸리티 함수 구현 (`src/lib/pdf/generator.ts`)
-- [x] 자동 파일명 생성 로직 (`견적서_[견적번호]_[클라이언트명].pdf`)
-- [x] 인쇄용 CSS 작성 (`@media print` 규칙)
-  - [x] 배경색 제거, 버튼 숨김
-  - [x] A4 용지 사이즈 자동 조정
-  - [x] 페이지 나누기 처리
-- [x] PDF 저장 버튼 클릭 핸들러 구현 (로딩 상태 포함)
-- [x] 인쇄 버튼 (`window.print()`) 구현
-- [x] **테스트 체크리스트**: Playwright MCP로 PDF 다운로드 트리거 및 파일명 검증
-
----
-
-#### TASK-010: 인쇄 최적화 및 UI/UX 개선 ✅ - 완료
-
-**파일**: `/tasks/TASK-010-ui-polish.md`
-**의존성**: TASK-004, TASK-007, TASK-009
-**예상 기간**: 2일
-
-- [x] 전체 페이지 디자인 리뷰 및 타이포그래피 개선
-  - [x] 폰트 크기, 자간, 행간 최적화
-  - [x] 컬러 시스템 통일 (브랜드 컬러 적용)
-- [x] 견적서 뷰어 인쇄 레이아웃 최적화 (A4 맞춤)
-- [x] 버튼 스타일 통일 및 호버/포커스 상태 개선
-- [x] 토스트 메시지 스타일 개선 (sonner 라이브러리 활용)
-- [x] 로딩 스켈레톤 컴포넌트 추가 (뷰어, 대시보드)
-- [x] 접근성 개선 (aria 속성, 키보드 네비게이션)
-- [x] 모바일 터치 친화적 버튼 크기 조정 (최소 44px)
-- [x] 다크 모드 지원 여부 결정 및 적용 (선택사항)
+  **수락 기준**
+  - [ ] 홈 화면의 주요 액션 버튼이 터키색 배경으로 표시됨
+  - [ ] 헤더/아이콘 강조 요소가 터키색 계열로 통일됨
+  - [ ] 흰색 배경 유지, 가독성 저해 없음
+  - [ ] 모바일 반응형 정상 동작
+  - [ ] `npm run build` 및 `npm run lint` 통과
 
 ---
 
-#### TASK-011: 에러 처리 및 엣지 케이스 완성 ✅ - 완료
+- **Task 021: 관리자 대시보드 색상 통일 (터키색 적용)**
+  - 작업 파일: `/tasks/021-dashboard-color-update.md`
+  - 선행 작업: Task 019
+  - 예상 소요 시간: 3~4시간
 
-**파일**: `/tasks/TASK-011-error-handling.md`
-**의존성**: TASK-005, TASK-008
-**예상 기간**: 1일
+  **배경**
 
-- [x] 뷰어 에러 시나리오 처리
-  - [x] 404: 데이터 없음 (친절한 메시지 + 홈 링크)
-  - [x] API 오류: 재시도 버튼 + 지원 문의처
-  - [x] 네트워크 오류: 오프라인 메시지 + 재로드 버튼
-- [x] 대시보드 에러 시나리오 처리
-  - [x] 데이터 로드 실패: 재시도 버튼
-  - [x] 링크 복사 실패: 수동 복사 안내
-  - [x] 세션 만료: 자동 로그아웃 + 안내 메시지
-- [x] 글로벌 에러 바운더리 설정 (`error.tsx`, `global-error.tsx`)
-- [x] API 라우트 에러 응답 표준화
-- [x] **테스트 체크리스트**: Playwright MCP로 모든 에러 시나리오 E2E 테스트
+  관리자 대시보드(`/dashboard`)의 헤더는 현재 `bg-white border-b border-slate-200` 계열로
+  견적서 뷰어의 터키색 헤더와 전혀 다른 외관을 가집니다. 동일한 서비스임을 시각적으로 전달하기 위해
+  대시보드 헤더를 터키색으로 통일합니다.
 
----
+  **수정 대상 파일**
+  - `src/components/admin/dashboard-header.tsx` — 헤더 배경 및 텍스트 색상 변경
+  - `src/app/dashboard/page.tsx` — 페이지 배경 색상 조정
+  - `src/components/admin/login-form.tsx` — 로그인 페이지 강조 색상 적용 (선택)
 
-#### TASK-012: Phase 3 통합 테스트 ✅ - 완료
+  **구현 사항**
 
-**파일**: `/tasks/TASK-012-integration-test.md`
-**의존성**: TASK-009, TASK-010, TASK-011
-**예상 기간**: 1일
+  대시보드 헤더(`DashboardHeader`):
+  - 헤더 배경: `bg-white border-b border-slate-200` → `bg-[#00A8A8]`
+  - 헤더 텍스트: `text-slate-900` → `text-white`
+  - 서브텍스트: `text-slate-500` → `text-white/70`
+  - 아이콘 래퍼(`bg-blue-600`) → `bg-white/20` (반투명 흰색으로 대비 확보)
+  - 아이콘 색상: `text-white` 유지
+  - 로그아웃 버튼: `border-slate-300 text-slate-600` → `border-white/40 text-white hover:bg-white/10 hover:text-white`
 
-- [x] 전체 클라이언트 사용자 플로우 테스트 (링크 접근 → 조회 → PDF 다운로드)
-- [x] 전체 관리자 플로우 테스트 (로그인 → 목록 조회 → 링크 복사 → 미리보기)
-- [x] 반응형 레이아웃 크로스 디바이스 테스트 (모바일/태블릿/데스크톱)
-- [x] **Playwright MCP E2E 테스트 전체 시나리오 실행**
-  - [x] 견적서 조회 플로우
-  - [x] PDF 다운로드 플로우
-  - [x] 관리자 인증 플로우
-  - [x] 링크 복사 플로우
-  - [x] 에러 상태 플로우
-- [x] 발견된 버그 수정
+  페이지 배경(`DashboardPage`):
+  - `bg-slate-50` → `bg-[#F0FAFA]` (틸 계열 연한 배경으로 통일감 강화, Task 019 토큰 활용)
+  - 섹션 타이틀(`견적서 목록`): `text-slate-900` 유지 (본문 가독성)
 
----
+  로그인 페이지(`login-form.tsx`) - 선택 적용:
+  - 로그인 버튼 배경: `bg-[#00A8A8] hover:bg-[#008080]`
+  - 카드 상단 강조 요소(로고, 아이콘 등)에 터키색 적용
 
-### Phase 4: 최적화 및 배포 (1주) ✅
-
-**목표**: 성능 최적화, SEO, 보안 강화 및 프로덕션 배포
-**상태**: 완료 (4/4 Tasks 완료)
+  **수락 기준**
+  - [ ] 관리자 대시보드 헤더 배경이 터키색(`#00A8A8`)으로 표시됨
+  - [ ] 헤더 내 모든 텍스트가 흰색(`#FFFFFF`)으로 표시됨
+  - [ ] 로그아웃 버튼이 헤더 색상에 맞게 스타일 적용됨
+  - [ ] 페이지 본문 배경이 틸 계열 연한 색상으로 변경됨
+  - [ ] 모바일 반응형 정상 동작
+  - [ ] `npm run build`, `npm run lint`, `npm run type-check` 모두 통과
 
 ---
 
-#### TASK-013: 성능 최적화 ✅ - 완료
+### Phase 7: 통합 검증 및 마무리
 
-**파일**: `/tasks/TASK-013-performance.md`
-**의존성**: TASK-012
-**예상 기간**: 1-2일
-
-- [x] Next.js Image 컴포넌트 적용 (회사 로고 이미지 최적화)
-- [x] 코드 스플리팅 확인 (dynamic import 적용)
-  - [x] InvoiceTable, InvoiceCardList를 lazy() + Suspense로 최적화
-- [x] ISR 캐싱 전략 검증 및 조정
-  - [x] `/view/[slug]`: `revalidate: 3600` (1시간)
-  - [x] `/dashboard`: `revalidate: 300` (5분)
-- [x] 번들 크기 분석 (`next build --analyze`) 및 최적화
-  - [x] First Load JS: 112KB (최적화됨)
-- [x] 불필요한 클라이언트 컴포넌트 서버 컴포넌트 전환 검토
-- [x] 폰트 최적화 (`next/font` 적용) - Geist 폰트 이미 적용
-- [x] **테스트 체크리스트**: npm run build 성공, lint 통과
+Phase 5~6의 모든 변경사항을 종합 검증하고 배포 준비를 완료합니다.
 
 ---
 
-#### TASK-014: SEO 및 메타데이터 최적화 ✅ - 완료
+- **Task 022: 전체 UI 통합 테스트 및 회귀 검증**
+  - 작업 파일: `/tasks/022-integration-test.md`
+  - 선행 작업: Task 017, 018, 019, 020, 021
+  - 예상 소요 시간: 2~3시간
 
-**파일**: `/tasks/TASK-014-seo.md`
-**의존성**: TASK-013
-**예상 기간**: 0.5일
+  **구현 사항**
+  - 전체 사용자 플로우 시나리오 수동 검증
+  - 클라이언트 여정: 홈 → 견적서 뷰어 → 닫기
+  - 관리자 여정: 대시보드 → 미리보기 → 목록으로
+  - 인쇄/PDF 생성 시 추가된 버튼들이 포함되지 않는지 확인
+  - 색상 통일성 크로스브라우저 확인 (Chrome, Safari, Firefox)
+  - 모바일 반응형 검증 (360px, 768px, 1280px 기준)
+  - `npm run check-all` 통과 확인
+  - `npm run build` 프로덕션 빌드 성공 확인
 
-- [x] `generateMetadata` 구현 완성 (견적서 뷰어)
-  - [x] 페이지 타이틀: `견적서 - [견적번호] | Invoice Web`
-  - [x] 설명: `[클라이언트명] - 견적서 [견적번호]`
-  - [x] OG 태그 (og:title, og:description, og:image, og:url)
-  - [x] Twitter Card 메타데이터 (card, title, description, images)
-- [x] `robots.txt` 설정 (대시보드 크롤링 제외)
-  - [x] `/view/` 허용, `/dashboard`, `/api` 제외
-- [x] `sitemap.xml` 생성 (공개 견적서 URL 포함)
-  - [x] `app/sitemap.ts` 동적 생성 구현
-  - [x] getAllInvoices() 호출하여 모든 견적서 포함
-- [x] 구조화 데이터 추가 (선택사항)
+  **테스트 체크리스트**
 
----
+  클라이언트 플로우:
+  - [ ] 홈(`/`) 접근 → 터키색 버튼 및 아이콘 정상 표시
+  - [ ] 견적서 뷰어(`/view/[slug]`) 직접 접근 → "닫기" 버튼 표시, "목록으로" 버튼 미표시
+  - [ ] "닫기" 버튼 클릭 → 이전 페이지로 이동 또는 탭 닫기
+  - [ ] 인쇄 미리보기 → "닫기", "목록으로" 버튼 미포함 확인
+  - [ ] PDF 다운로드 → 버튼 영역 미포함 확인
 
-#### TASK-015: 보안 검토 및 강화 ✅ - 완료
+  관리자 플로우:
+  - [ ] 대시보드(`/dashboard`) 접근 → 터키색 헤더 정상 표시, 흰색 텍스트 확인
+  - [ ] 미리보기 클릭 → `/view/[slug]?from=dashboard`로 이동 확인
+  - [ ] 뷰어 헤더에 "목록으로" 버튼 표시, "닫기" 버튼 미표시 확인
+  - [ ] "목록으로" 클릭 → `/dashboard`로 이동 확인
 
-**파일**: `/tasks/TASK-015-security.md`
-**의존성**: TASK-006, TASK-013
-**예상 기간**: 1일
+  반응형:
+  - [ ] 모바일(360px): 모든 헤더 버튼 아이콘만 표시, 툴팁 정상 동작
+  - [ ] 태블릿(768px): 텍스트+아이콘 조합 정상 표시
+  - [ ] 데스크톱(1280px): 전체 레이아웃 이상 없음
 
-- [x] 환경 변수 보안 검토 (서버 전용 변수 노출 방지)
-  - [x] `.env.example` 생성 (민감정보 제외)
-  - [x] NOTION_TOKEN, ADMIN_PASSWORD_HASH 서버 전용 확인
-- [x] XSS 방지 확인 (Next.js 기본 이스케이핑 활용)
-- [x] CSRF 보호 확인 (Server Action 기본 지원)
-- [x] 패스워드 저장 방식 검토 (bcryptjs 해시 적용 확인)
-- [x] 미들웨어 보안 강화 (대시보드 접근 제어)
-- [x] HTTP 보안 헤더 설정 (`next.config.ts`)
-  - [x] Content-Security-Policy (CSP)
-  - [x] Strict-Transport-Security (HSTS)
-  - [x] X-Permitted-Cross-Domain-Policies
-  - [x] Permissions-Policy
-- [x] Rate Limiting 고려 (선택사항)
-- [x] 노션 API 토큰 노출 방지 확인
-
----
-
-#### TASK-016: 프로덕션 배포 ✅ - 완료
-
-**파일**: `/tasks/TASK-016-deployment.md`
-**의존성**: TASK-014, TASK-015
-**예상 기간**: 1일
-
-- [x] Vercel 프로젝트 설정 및 연동 (배포 가이드 생성)
-- [x] 프로덕션 환경 변수 설정 (DEPLOYMENT.md 문서 제공)
-  - [x] `NOTION_TOKEN`
-  - [x] `NOTION_INVOICES_DB_ID`
-  - [x] `NOTION_ITEMS_DB_ID`
-  - [x] `ADMIN_PASSWORD_HASH`
-  - [x] `NEXT_PUBLIC_APP_URL`
-- [x] 도메인 설정 및 SSL 인증서 확인 (Vercel 기본 HTTPS)
-- [x] 배포 후 전체 기능 검증 (체크리스트 제공)
-- [x] `npm run build` 성공 확인 (112KB 최적화)
-- [x] 배포 가이드 및 환경변수 문서 작성
+  빌드 및 품질:
+  - [ ] `npm run lint` 통과 (경고 없음)
+  - [ ] `npm run type-check` 통과
+  - [ ] `npm run build` 성공
+  - [ ] Lighthouse 접근성 점수 이전 수준 유지
 
 ---
 
-### Phase 5: 향후 개선사항 (MVP 이후)
+## 작업 요약
 
-**목표**: MVP 검증 후 사용자 피드백 기반 기능 확장
+| Task     | 제목                                | Phase   | 예상 소요 시간 | 선행 작업    |
+| -------- | ----------------------------------- | ------- | -------------- | ------------ |
+| Task 017 | 관리자 대시보드 목록 복귀 버튼 추가 | Phase 5 | 2~4시간        | 없음         |
+| Task 018 | 견적서 뷰어 닫기 버튼 추가          | Phase 5 | 2~4시간        | 없음         |
+| Task 019 | 브랜드 컬러 토큰 정의               | Phase 6 | 1~2시간        | 없음         |
+| Task 020 | 홈 화면 색상 통일                   | Phase 6 | 2~3시간        | Task 019     |
+| Task 021 | 관리자 대시보드 색상 통일           | Phase 6 | 3~4시간        | Task 019     |
+| Task 022 | 전체 UI 통합 테스트 및 회귀 검증    | Phase 7 | 2~3시간        | 017~021 전체 |
 
----
-
-#### TASK-017: 다중 관리자 지원
-
-**파일**: `/tasks/TASK-017-multi-admin.md`
-**의존성**: TASK-016
-**예상 기간**: 1주
-
-- [ ] 이메일 기반 계정 시스템 도입
-- [ ] OAuth 연동 (Google, GitHub 등)
-- [ ] 역할 기반 접근 제어 (RBAC) 구현
-- [ ] 관리자 계정 관리 페이지
+**총 예상 소요 시간**: 12~20시간 (약 2~3일)
 
 ---
 
-#### TASK-018: 견적서 직접 작성 기능
+## 주요 수정 파일 참조
 
-**파일**: `/tasks/TASK-018-invoice-editor.md`
-**의존성**: TASK-016
-**예상 기간**: 2주
-
-- [ ] 견적서 작성 폼 페이지 구현 (노션 외 직접 입력)
-- [ ] 견적 항목 동적 추가/삭제
-- [ ] 견적서 임시 저장 및 발행
-- [ ] 내부 DB 연동 (PostgreSQL, PlanetScale 등)
-
----
-
-#### TASK-019: 이메일 발송 기능
-
-**파일**: `/tasks/TASK-019-email.md`
-**의존성**: TASK-016
-**예상 기간**: 3-4일
-
-- [ ] 이메일 서비스 연동 (Resend, SendGrid 등)
-- [ ] 견적서 링크가 포함된 이메일 템플릿 제작
-- [ ] 대시보드에서 이메일 발송 기능 추가
-- [ ] 발송 이력 관리
+```
+src/
+├── app/
+│   ├── page.tsx                                  # Task 020
+│   ├── dashboard/page.tsx                        # Task 021
+│   └── view/[slug]/page.tsx                      # Task 017
+├── components/
+│   ├── invoice/
+│   │   └── header-bar.tsx                        # Task 017, 018
+│   └── admin/
+│       ├── dashboard-header.tsx                  # Task 021
+│       ├── link-manager.tsx                      # Task 017
+│       └── login-form.tsx                        # Task 021 (선택)
+└── app/
+    └── globals.css                               # Task 019
+```
 
 ---
 
-#### TASK-020: 분석 및 통계 기능
+## 이전 로드맵 참조
 
-**파일**: `/tasks/TASK-020-analytics.md`
-**의존성**: TASK-016
-**예상 기간**: 3-4일
-
-- [ ] 견적서 조회수 추적
-- [ ] PDF 다운로드 통계
-- [ ] 관리자 대시보드 분석 차트 (Chart.js 또는 Recharts)
-- [ ] 만료된 견적서 자동 아카이빙
+v1.0 로드맵 (Phase 1~4, 16개 Task 완료): `docs/roadmaps/ROADMAP_v1.md`
 
 ---
 
-#### TASK-021: 부가 기능
-
-**파일**: `/tasks/TASK-021-additional-features.md`
-**의존성**: TASK-016
-**예상 기간**: 1주
-
-- [ ] 결제 링크 통합 (Stripe, 포트원)
-- [ ] QR 코드 생성 (견적서 공개 링크)
-- [ ] 다국어 지원 (한국어, 영어)
-- [ ] 견적서 삭제 기능 (대시보드)
-- [ ] 다중 선택 일괄 처리 (삭제, 링크 복사 등)
-
----
-
-## 현재 진행 상태
-
-| Phase                     | 상태    | 기간     | 진행률     |
-| ------------------------- | ------- | -------- | ---------- |
-| Phase 1: MVP 기초         | ✅ 완료 | 2주      | 100% (5/5) |
-| Phase 2: 관리자 기능      | ✅ 완료 | 1주      | 100% (3/3) |
-| Phase 3: PDF 및 UI 다듬기 | ✅ 완료 | 1주      | 100% (4/4) |
-| Phase 4: 최적화 및 배포   | ✅ 완료 | 1주      | 100% (4/4) |
-| Phase 5: 향후 개선사항    | 대기 중 | MVP 이후 | -          |
-
----
-
-## Task 전체 목록
-
-### Phase 1: MVP 기초 ✅
-
-| Task ID  | 제목                                    | 상태    | 의존성             |
-| -------- | --------------------------------------- | ------- | ------------------ |
-| TASK-001 | 프로젝트 설정 및 기본 구조 구성         | ✅ 완료 | 없음               |
-| TASK-002 | TypeScript 타입 정의 및 인터페이스 설계 | ✅ 완료 | TASK-001           |
-| TASK-003 | 노션 API 연동 및 데이터 페칭 구현       | ✅ 완료 | TASK-001, TASK-002 |
-| TASK-004 | 공개 견적서 뷰어 UI 구현 (더미 데이터)  | ✅ 완료 | TASK-001, TASK-002 |
-| TASK-005 | 견적서 뷰어 노션 API 실제 연동          | ✅ 완료 | TASK-003, TASK-004 |
-
-### Phase 2: 관리자 기능 ✅
-
-| Task ID  | 제목                                | 상태    | 의존성                       |
-| -------- | ----------------------------------- | ------- | ---------------------------- |
-| TASK-006 | 관리자 인증 페이지 구현             | ✅ 완료 | TASK-001, TASK-002           |
-| TASK-007 | 관리자 대시보드 견적서 목록 UI 구현 | ✅ 완료 | TASK-001, TASK-002, TASK-006 |
-| TASK-008 | 대시보드 링크 관리 및 노션 API 연동 | ✅ 완료 | TASK-003, TASK-007           |
-
-### Phase 3: PDF 및 UI 다듬기 ✅
-
-| Task ID  | 제목                          | 상태    | 의존성                       |
-| -------- | ----------------------------- | ------- | ---------------------------- |
-| TASK-009 | PDF 다운로드 기능 구현        | ✅ 완료 | TASK-004, TASK-005           |
-| TASK-010 | 인쇄 최적화 및 UI/UX 개선     | ✅ 완료 | TASK-004, TASK-007, TASK-009 |
-| TASK-011 | 에러 처리 및 엣지 케이스 완성 | ✅ 완료 | TASK-005, TASK-008           |
-| TASK-012 | Phase 3 통합 테스트           | ✅ 완료 | TASK-009, TASK-010, TASK-011 |
-
-### Phase 4: 최적화 및 배포
-
-| Task ID  | 제목                     | 상태    | 의존성             |
-| -------- | ------------------------ | ------- | ------------------ |
-| TASK-013 | 성능 최적화              | ✅ 완료 | TASK-012           |
-| TASK-014 | SEO 및 메타데이터 최적화 | ✅ 완료 | TASK-013           |
-| TASK-015 | 보안 검토 및 강화        | ✅ 완료 | TASK-006, TASK-013 |
-| TASK-016 | 프로덕션 배포            | ✅ 완료 | TASK-014, TASK-015 |
-
-### Phase 5: 향후 개선사항
-
-| Task ID  | 제목                  | 상태    | 의존성   |
-| -------- | --------------------- | ------- | -------- |
-| TASK-017 | 다중 관리자 지원      | 대기 중 | TASK-016 |
-| TASK-018 | 견적서 직접 작성 기능 | 대기 중 | TASK-016 |
-| TASK-019 | 이메일 발송 기능      | 대기 중 | TASK-016 |
-| TASK-020 | 분석 및 통계 기능     | 대기 중 | TASK-016 |
-| TASK-021 | 부가 기능             | 대기 중 | TASK-016 |
-
----
-
-## 기술 스택 요약
-
-| 범주             | 기술                  | 버전              |
-| ---------------- | --------------------- | ----------------- |
-| Framework        | Next.js               | 15.5.3            |
-| Runtime          | React                 | 19.1.0            |
-| Language         | TypeScript            | 5                 |
-| Styling          | TailwindCSS           | v4                |
-| UI Components    | shadcn/ui             | latest (new-york) |
-| Forms            | React Hook Form + Zod | latest            |
-| State Management | Zustand               | latest            |
-| Notion API       | @notionhq/client      | latest            |
-| PDF 생성         | html2pdf.js           | latest            |
-| Icons            | Lucide React          | latest            |
-| 배포             | Vercel                | -                 |
-
----
-
-**작성일**: 2026-03-03
-**최종 업데이트**: 2026-03-04
-**기준 PRD**: `docs/PRD.md` (v1.0.0)
-**현황**: Phase 1-4 완료, MVP 완성 (16/16 Tasks 완료 - 100%) 🎉
-**다음 단계**: Vercel 배포 (DEPLOYMENT.md 참조)
+**작성일**: 2026-03-16
+**버전**: v2.0
+**대상 브랜치**: `feature/v2-enhancement`

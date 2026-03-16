@@ -30,18 +30,5 @@
     "ask": []
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["playwright"],
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/notification-hook.sh"
-          }
-        ]
-      }
-    ]
-  }
+  "enabledMcpjsonServers": ["playwright"]
 }

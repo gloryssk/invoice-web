@@ -10,11 +10,11 @@ import NextLink from 'next/link'
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      {/* 우측 상단 대시보드 버튼 */}
+      {/* 우측 상단 대시보드 버튼 - 터키색 강조 */}
       <header className="flex justify-end px-6 pt-5">
         <NextLink
           href="/dashboard"
-          className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900"
+          className="border-primary bg-primary/10 text-primary hover:bg-primary/20 inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm font-medium shadow-sm transition-colors"
         >
           <LayoutDashboard className="h-4 w-4" />
           관리자 대시보드
@@ -22,9 +22,9 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        {/* 상단 헤더 영역 */}
+        {/* 상단 헤더 영역 - 타이틀을 터키색으로 강조 */}
         <section className="py-12 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-primary text-4xl font-bold tracking-tight">
             견적서 조회 시스템
           </h1>
           <p className="mt-3 text-base text-slate-500">
@@ -34,9 +34,9 @@ export default function Home() {
 
         {/* 본문 카드 영역 */}
         <div className="mx-auto max-w-2xl space-y-5 px-4 pb-16">
-          {/* 견적서 조회 방법 카드 */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-5 flex items-center gap-2 text-slate-700">
+          {/* 견적서 조회 방법 카드 - 아이콘을 터키색으로 */}
+          <div className="hover:border-primary rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors">
+            <div className="text-primary mb-5 flex items-center gap-2">
               <FileText className="h-4 w-4" />
               <span className="font-semibold">견적서 조회 방법</span>
             </div>
@@ -70,9 +70,9 @@ export default function Home() {
             </ol>
           </div>
 
-          {/* 견적서 URL 예시 카드 */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2 text-slate-700">
+          {/* 견적서 URL 예시 카드 - 아이콘을 터키색으로 */}
+          <div className="hover:border-primary rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors">
+            <div className="text-primary mb-4 flex items-center gap-2">
               <Download className="h-4 w-4" />
               <span className="font-semibold">견적서 URL 예시</span>
             </div>
@@ -87,9 +87,9 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 문제가 있나요? 카드 */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-3 flex items-center gap-2 text-slate-700">
+          {/* 문제가 있나요? 카드 - 아이콘을 터키색으로 */}
+          <div className="hover:border-primary rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors">
+            <div className="text-primary mb-3 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               <span className="font-semibold">문제가 있나요?</span>
             </div>
@@ -99,9 +99,9 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 시스템 장점 카드 */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2 text-slate-700">
+          {/* 시스템 장점 카드 - 아이콘을 터키색으로 */}
+          <div className="hover:border-primary rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors">
+            <div className="text-primary mb-4 flex items-center gap-2">
               <Link className="h-4 w-4" />
               <span className="font-semibold">시스템 특징</span>
             </div>

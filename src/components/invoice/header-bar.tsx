@@ -9,16 +9,19 @@
  * - 인쇄 버튼 (window.print() 호출)
  * - 화면 상단에 고정되어 항상 접근 가능
  * - 인쇄 모드에서는 숨김 처리
+ * - 관리자 진입 시 '목록으로' 버튼 표시
+ * - 클라이언트 진입 시 '닫기' 버튼 표시
  *
  * 컴포넌트 구조:
  * ┌──────────────────────────────────────────────────────┐
  * │ HeaderBar (sticky top-0)                             │
- * │  ├─ 좌측: FileText 아이콘 + 견적서 정보              │
- * │  └─ 우측: 인쇄 버튼 + PDF 다운로드 버튼             │
+ * │  ├─ 좌측: 목록버튼 + FileText 아이콘 + 견적서 정보   │
+ * │  └─ 우측: 인쇄 버튼 + PDF 다운로드 + 닫기 버튼       │
  * └──────────────────────────────────────────────────────┘
  */
 
-import { Printer, FileText } from 'lucide-react'
+import Link from 'next/link'
+import { Printer, FileText, ArrowLeft, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Tooltip,
@@ -35,12 +38,18 @@ interface HeaderBarProps {
   clientName: string
   /** 발행일 (PDF 파일명에 사용) */
   issueDate: string
+  /** 관리자 진입 시 '목록으로' 버튼 표시 여부 */
+  showBackButton?: boolean
+  /** 클라이언트 진입 시 '닫기' 버튼 표시 여부 */
+  showCloseButton?: boolean
 }
 
 export function HeaderBar({
   invoiceNumber,
   clientName,
   issueDate,
+  showBackButton = false,
+  showCloseButton = false,
 }: HeaderBarProps) {
   return (
     // 헤더 바 컨테이너 - 인쇄 시 숨김 처리 (오션 블루 배경)
@@ -49,8 +58,22 @@ export function HeaderBar({
       role="banner"
     >
       <div className="container mx-auto flex h-14 max-w-4xl items-center justify-between px-4 sm:px-6">
-        {/* 로고 및 견적서 식별 정보 */}
+        {/* 좌측: 네비게이션 버튼 + 로고 및 견적서 식별 정보 */}
         <div className="flex items-center gap-2">
+          {/* 관리자 진입 시 '목록으로' 버튼 표시 */}
+          {showBackButton && (
+            <Link href="/dashboard" className="print:hidden">
+              <Button
+                variant="outline"
+                size="icon"
+                aria-label="목록으로 돌아가기"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-8 w-8"
+              >
+                <ArrowLeft className="size-4" aria-hidden="true" />
+              </Button>
+            </Link>
+          )}
+
           <FileText
             className="text-primary-foreground size-5"
             aria-hidden="true"
@@ -66,7 +89,7 @@ export function HeaderBar({
           </div>
         </div>
 
-        {/* 액션 버튼 그룹 - gap-2로 버튼 간격 통일 */}
+        {/* 우측: 액션 버튼 그룹 - gap-2로 버튼 간격 통일 */}
         <div className="flex items-center gap-2">
           {/* 인쇄 버튼 - 데스크톱 (아이콘 + 텍스트): variant="outline" */}
           <Button
@@ -104,6 +127,19 @@ export function HeaderBar({
             clientName={clientName}
             issueDate={issueDate}
           />
+
+          {/* 클라이언트 진입 시 '닫기' 버튼 표시 */}
+          {showCloseButton && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => window.history.back()}
+              aria-label="닫기"
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-8 w-8 print:hidden"
+            >
+              <X className="size-4" aria-hidden="true" />
+            </Button>
+          )}
         </div>
       </div>
     </header>

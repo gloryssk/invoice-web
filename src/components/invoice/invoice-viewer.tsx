@@ -33,9 +33,17 @@ import type { Invoice } from '@/types/invoice'
 // 견적서 뷰어 Props 인터페이스
 interface InvoiceViewerProps {
   invoice: Invoice
+  /** 관리자 진입 시 '목록으로' 버튼 표시 여부 */
+  showBackButton?: boolean
+  /** 클라이언트 진입 시 '닫기' 버튼 표시 여부 */
+  showCloseButton?: boolean
 }
 
-export function InvoiceViewer({ invoice }: InvoiceViewerProps) {
+export function InvoiceViewer({
+  invoice,
+  showBackButton = false,
+  showCloseButton = false,
+}: InvoiceViewerProps) {
   return (
     // 전체 페이지 래퍼
     <div className="bg-muted/30 min-h-screen print:bg-white">
@@ -44,6 +52,8 @@ export function InvoiceViewer({ invoice }: InvoiceViewerProps) {
         invoiceNumber={invoice.invoiceNumber}
         clientName={invoice.clientName}
         issueDate={invoice.issueDate}
+        showBackButton={showBackButton}
+        showCloseButton={showCloseButton}
       />
 
       {/* 메인 콘텐츠 영역 - PDF 출력 대상 영역 (id로 식별) */}

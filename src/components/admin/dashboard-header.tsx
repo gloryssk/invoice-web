@@ -29,7 +29,7 @@ function LogoutButton() {
         type="submit"
         variant="outline"
         size="sm"
-        className="flex items-center gap-2 border-slate-300 text-slate-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+        className="flex items-center gap-2 border-white/40 text-white hover:bg-white/10 hover:text-white"
         aria-label="로그아웃"
       >
         <LogOut className="h-4 w-4" aria-hidden="true" />
@@ -55,24 +55,24 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ className }: DashboardHeaderProps) {
   return (
     <header
-      className={`border-b border-slate-200 bg-white ${className ?? ''}`}
+      className={`border-primary/20 bg-primary border-b ${className ?? ''}`}
       role="banner"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* 좌측: 로고 및 제목 */}
+          {/* 좌측: 로고 및 제목 - 터키색 배경에 흰색 텍스트 */}
           <div className="flex items-center gap-3">
             <div
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/20"
               aria-hidden="true"
             >
               <LayoutDashboard className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-base font-semibold text-slate-900">
+              <h1 className="text-base font-semibold text-white">
                 관리자 대시보드
               </h1>
-              <p className="hidden text-xs text-slate-500 sm:block">
+              <p className="hidden text-xs text-white/70 sm:block">
                 Invoice Web Viewer
               </p>
             </div>

@@ -66,11 +66,11 @@ export function AdminLoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      {/* 폼 제목 */}
+      {/* 폼 제목 - 터키색 아이콘 적용 */}
       <div className="mb-8 text-center">
         <div className="mb-4 flex justify-center">
-          <div className="rounded-lg bg-blue-50 p-3">
-            <Lock className="h-6 w-6 text-blue-600" />
+          <div className="bg-primary/10 rounded-lg p-3">
+            <Lock className="text-primary h-6 w-6" />
           </div>
         </div>
         <h1 className="text-2xl font-bold text-gray-900">관리자 로그인</h1>
@@ -110,11 +110,11 @@ export function AdminLoginForm() {
           )}
         </div>
 
-        {/* 로그인 버튼 */}
+        {/* 로그인 버튼 - 터키색 적용 */}
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-blue-600 text-white hover:bg-blue-700"
+          className="bg-primary hover:bg-primary/90 w-full text-white"
         >
           {isPending ? (
             <>

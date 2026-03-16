@@ -21,6 +21,7 @@ export const revalidate = 3600
 // 페이지 Props 인터페이스
 interface InvoiceViewPageProps {
   params: Promise<{ slug: string }>
+  searchParams?: Promise<Record<string, string | string[] | undefined>>
 }
 
 /**
@@ -108,8 +109,10 @@ export async function generateMetadata({
  */
 export default async function InvoiceViewPage({
   params,
+  searchParams,
 }: InvoiceViewPageProps) {
   const { slug } = await params
+  const queryParams = await searchParams
 
   try {
     // 노션 API에서 견적서 조회
@@ -120,7 +123,16 @@ export default async function InvoiceViewPage({
       notFound()
     }
 
-    return <InvoiceViewer invoice={invoice} />
+    // 대시보드에서 진입했는지 판별
+    const fromDashboard = queryParams?.from === 'dashboard'
+
+    return (
+      <InvoiceViewer
+        invoice={invoice}
+        showBackButton={fromDashboard}
+        showCloseButton={!fromDashboard}
+      />
+    )
   } catch (error) {
     console.error(`견적서 조회 실패 (slug: ${slug}):`, error)
     // API 오류는 error.tsx에서 처리

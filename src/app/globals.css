@@ -52,8 +52,8 @@
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(0.99 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  /* 주요 색상: 딥 오션 블루 */
-  --primary: oklch(0.45 0.15 250);
+  /* 주요 색상: 터키색 (브랜드 컬러) */
+  --primary: oklch(0.6 0.15 200);
   --primary-foreground: oklch(0.98 0 0);
   /* 보조 색상: 라이트 시안 */
   --secondary: oklch(0.75 0.1 200);
@@ -79,7 +79,7 @@
   /* 사이드바: 라이트 오션 */
   --sidebar: oklch(0.97 0.01 250);
   --sidebar-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.45 0.15 250);
+  --sidebar-primary: oklch(0.6 0.15 200);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.6 0.2 190);
   --sidebar-accent-foreground: oklch(0.98 0 0);

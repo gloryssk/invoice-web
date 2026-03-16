@@ -42,8 +42,8 @@ function DashboardSkeleton() {
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* 헤더 */}
+    <div className="bg-primary/5 min-h-screen">
+      {/* 헤더 - 터키색 배경 */}
       <DashboardHeader />
 
       {/* 메인 컨텐츠 */}
